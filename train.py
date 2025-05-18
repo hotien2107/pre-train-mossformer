@@ -304,28 +304,3 @@ class EarlyStopper:
             self.counter += 1
 
         return self.counter >= self.patience
-
-if __name__ == '__main__':
-    # Configuration
-    dataset_config = DatasetConfig(
-        dataset_name="speech-separation-benchmark/wsj0-2mix",
-        sample_rate=8000,
-        max_duration=5.0,
-        num_sources=2
-    )
-
-    trainer = Mossformer2Trainer(
-        model_name='damo/speech_mossformer2_separation_temporal_8k',
-        dataset_config=dataset_config,
-        save_dir='checkpoints/mossformer2',
-        epochs=100,
-        batch_size=16,
-        lr=5e-4,
-        grad_accum_steps=4,
-        num_gpus=torch.cuda.device_count(),
-        max_checkpoints=3
-    )
-
-    # To resume training from checkpoint:
-    # trainer.load_checkpoint("checkpoints/mossformer2/mossformer2_epoch010.pt")
-    trainer.train()
